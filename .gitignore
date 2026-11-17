@@ -17,9 +17,8 @@ out/
 *.keystore
 keystore/
 
-# Native build
+# Native build intermediate (keep .so files in git)
 build/native/
-app/src/main/jniLibs/*/*.so
 
 # OS
 .DS_Store
