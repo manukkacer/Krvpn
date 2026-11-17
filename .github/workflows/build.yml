@@ -2,6 +2,7 @@ name: Build KRVPN
 
 on:
   push:
+    branches: ['main']
     tags: ['v*']
   pull_request:
     branches: ['main', 'develop']
@@ -24,43 +25,28 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: 17
+          java-version: '17'
           cache: 'gradle'
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
-        with:
-          api-level: 35
-          ndk-version: r26c
-          cmake-version: 3.22.1
-          cache-key: ${{ runner.os }}-android-sdk
 
-      - name: Cache Gradle packages
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Make Gradle wrapper executable
-        run: chmod +x ./gradlew
+      - name: Make scripts executable
+        run: |
+          chmod +x ./gradlew
+          if [ -f "./build_native.sh" ]; then chmod +x ./build_native.sh; fi
 
       - name: Build native security library
         run: |
-          chmod +x ./build_native.sh
-          ./build_native.sh
-        env:
-          ANDROID_NDK_HOME: ${{ env.ANDROID_NDK_HOME }}
-          ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
+          export ANDROID_SDK_ROOT="${ANDROID_HOME}"
+          export ANDROID_NDK_HOME="${ANDROID_NDK_LATEST_HOME:-$ANDROID_NDK_HOME}"
+          if [ -f "./build_native.sh" ]; then ./build_native.sh; fi
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug
-        env:
-          ANDROID_NDK_HOME: ${{ env.ANDROID_NDK_HOME }}
-          ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
+        run: |
+          export ANDROID_SDK_ROOT="${ANDROID_HOME}"
+          export ANDROID_NDK_HOME="${ANDROID_NDK_LATEST_HOME:-$ANDROID_NDK_HOME}"
+          ./gradlew assembleDebug --stacktrace
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
@@ -68,40 +54,6 @@ jobs:
           name: krvpn-debug-apk
           path: app/build/outputs/apk/debug/*.apk
           retention-days: 7
-
-      - name: Build Release APK (if keystore available)
-        if: env.KEYSTORE_PASSWORD != '' && env.KEY_PASSWORD != ''
-        run: ./gradlew assembleRelease
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-          ANDROID_NDK_HOME: ${{ env.ANDROID_NDK_HOME }}
-          ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
-
-      - name: Upload Release APK
-        if: env.KEYSTORE_PASSWORD != '' && env.KEY_PASSWORD != ''
-        uses: actions/upload-artifact@v4
-        with:
-          name: krvpn-release-apk
-          path: app/build/outputs/apk/release/*.apk
-          retention-days: 30
-
-      - name: Build Release AAB (if keystore available)
-        if: env.KEYSTORE_PASSWORD != '' && env.KEY_PASSWORD != ''
-        run: ./gradlew bundleRelease
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-          ANDROID_NDK_HOME: ${{ env.ANDROID_NDK_HOME }}
-          ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
-
-      - name: Upload Release AAB
-        if: env.KEYSTORE_PASSWORD != '' && env.KEY_PASSWORD != ''
-        uses: actions/upload-artifact@v4
-        with:
-          name: krvpn-release-aab
-          path: app/build/outputs/bundle/release/*.aab
-          retention-days: 30
 
   lint:
     name: Lint & Static Analysis
@@ -114,16 +66,16 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: 17
+          java-version: '17'
           cache: 'gradle'
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
-        with:
-          api-level: 35
 
       - name: Run Lint
-        run: ./gradlew lintDebug
+        run: |
+          chmod +x ./gradlew
+          ./gradlew lintDebug
 
       - name: Upload Lint Report
         uses: actions/upload-artifact@v4
@@ -143,16 +95,16 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: 17
+          java-version: '17'
           cache: 'gradle'
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
-        with:
-          api-level: 35
 
       - name: Run Unit Tests
-        run: ./gradlew testDebugUnitTest
+        run: |
+          chmod +x ./gradlew
+          ./gradlew testDebugUnitTest
 
       - name: Upload Test Report
         uses: actions/upload-artifact@v4
@@ -160,36 +112,3 @@ jobs:
         with:
           name: test-report
           path: app/build/reports/tests/testDebugUnitTest/
-
-  release:
-    name: Create Release
-    needs: [build, lint, test]
-    if: startsWith(github.ref, 'refs/tags/v')
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Download Release APK
-        uses: actions/download-artifact@v4
-        with:
-          name: krvpn-release-apk
-          path: artifacts/
-
-      - name: Download Release AAB
-        uses: actions/download-artifact@v4
-        with:
-          name: krvpn-release-aab
-          path: artifacts/
-
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: artifacts/*
-          generate_release_notes: true
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
