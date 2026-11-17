@@ -33,43 +33,40 @@ jobs:
         with:
           api-level: 35
           ndk-version: 26.1.10909125
-          cmdline-tools-version: '11076708_latest'  # Latest cmdline tools
           platforms: android-35
           build-tools: '34.0.0'
           cmake-version: '3.22.1'
 
-      - name: Accept SDK Licenses
+      - name: Generate Gradle Wrapper
         run: |
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager \
-            "platforms;android-35" \
-            "build-tools;34.0.0" \
-            "ndk;26.1.10909125" \
-            "cmake;3.22.1"
+          cd ${{ github.workspace }}
+          gradle wrapper --gradle-version 8.5
 
-      - name: Make scripts executable
-        run: |
-          chmod +x ./gradlew
-          if [ -f "./build_krvpn_security.sh" ]; then chmod +x ./build_krvpn_security.sh; fi
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
 
-      - name: Build native security library
-        run: |
-          export ANDROID_SDK_ROOT="${ANDROID_HOME}"
-          export ANDROID_NDK_HOME="${ANDROID_NDK_HOME}"
-          if [ -f "./build_krvpn_security.sh" ]; then ./build_krvpn_security.sh; fi
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Build Debug APK
         run: |
           export ANDROID_SDK_ROOT="${ANDROID_HOME}"
           export ANDROID_NDK_HOME="${ANDROID_NDK_HOME}"
-          ./gradlew assembleDebug --stacktrace
+          ./gradlew assembleDebug --stacktrace --no-daemon
 
-      - name: Build Release APK (if keystore available)
+      - name: Build Release APK (if keystore secrets available)
         if: env.KEYSTORE_PASSWORD != '' && env.KEY_PASSWORD != ''
         run: |
           export ANDROID_SDK_ROOT="${ANDROID_HOME}"
           export ANDROID_NDK_HOME="${ANDROID_NDK_HOME}"
-          ./gradlew assembleRelease --stacktrace
+          ./gradlew assembleRelease --stacktrace --no-daemon
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
@@ -105,19 +102,17 @@ jobs:
         with:
           api-level: 35
           ndk-version: 26.1.10909125
-          cmdline-tools-version: '11076708_latest'
           platforms: android-35
           build-tools: '34.0.0'
           cmake-version: '3.22.1'
 
-      - name: Accept SDK Licenses
-        run: |
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+      - name: Generate Gradle Wrapper
+        run: gradle wrapper --gradle-version 8.5
 
       - name: Run Lint
         run: |
           chmod +x ./gradlew
-          ./gradlew lintDebug
+          ./gradlew lintDebug --no-daemon
 
       - name: Upload Lint Report
         uses: actions/upload-artifact@v4
@@ -145,19 +140,17 @@ jobs:
         with:
           api-level: 35
           ndk-version: 26.1.10909125
-          cmdline-tools-version: '11076708_latest'
           platforms: android-35
           build-tools: '34.0.0'
           cmake-version: '3.22.1'
 
-      - name: Accept SDK Licenses
-        run: |
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+      - name: Generate Gradle Wrapper
+        run: gradle wrapper --gradle-version 8.5
 
       - name: Run Unit Tests
         run: |
           chmod +x ./gradlew
-          ./gradlew testDebugUnitTest
+          ./gradlew testDebugUnitTest --no-daemon
 
       - name: Upload Test Report
         uses: actions/upload-artifact@v4
