@@ -1,0 +1,49 @@
+# Gradle
+.gradle/
+build/
+local.properties
+*.iml
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.idea_modules/
+
+# Keystore
+*.jks
+*.keystore
+keystore/
+
+# Native build
+build/native/
+app/src/main/jniLibs/*/*.so
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Test reports
+app/build/reports/
+
+# Release APKs/AABs
+*.apk
+*.aab
+
+# Local config
+local.properties
+gradle.properties.local
+
+# Backup
+*~
+*.bak
+*.tmp
+
+# Crashlytics/Firebase (if added)
+google-services.json
+firebase-config.json

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ===== KRVPN BRAND COLORS ===== -->
+    <!-- Primary: Deep Red / Crimson -->
+    <color name="krvpn_primary">#C62828</color>
+    <color name="krvpn_primary_variant">#8E0000</color>
+    <color name="krvpn_primary_light">#EF5350</color>
+    <color name="krvpn_primary_dark">#B71C1C</color>
+    <color name="krvpn_on_primary">#FFFFFF</color>
+
+    <!-- Secondary: Dark Charcoal -->
+    <color name="krvpn_secondary">#37474F</color>
+    <color name="krvpn_secondary_variant">#263238</color>
+    <color name="krvpn_secondary_light">#546E7A</color>
+    <color name="krvpn_on_secondary">#FFFFFF</color>
+
+    <!-- Tertiary: Gold/Amber Accent -->
+    <color name="krvpn_tertiary">#FFB300</color>
+    <color name="krvpn_tertiary_variant">#FFA000</color>
+    <color name="krvpn_on_tertiary">#000000</color>
+
+    <!-- Surface & Background -->
+    <color name="krvpn_surface">#FFFFFF</color>
+    <color name="krvpn_surface_variant">#F5F5F5</color>
+    <color name="krvpn_surface_container">#EEEEEE</color>
+    <color name="krvpn_surface_container_high">#E0E0E0</color>
+    <color name="krvpn_on_surface">#1C1B1F</color>
+    <color name="krvpn_on_surface_variant">#49454F</color>
+
+    <!-- Dark Theme Surface -->
+    <color name="krvpn_surface_dark">#1C1B1F</color>
+    <color name="krvpn_surface_variant_dark">#2B2930</color>
+    <color name="krvpn_surface_container_dark">#3D3940</color>
+    <color name="krvpn_on_surface_dark">#E6E1E5</color>
+
+    <!-- Background -->
+    <color name="krvpn_background">#FEFBFF</color>
+    <color name="krvpn_background_dark">#1C1B1F</color>
+    <color name="krvpn_on_background">#1C1B1F</color>
+    <color name="krvpn_on_background_dark">#E6E1E5</color>
+
+    <!-- Outline & Divider -->
+    <color name="krvpn_outline">#79747E</color>
+    <color name="krvpn_outline_variant">#CAC4D0</color>
+    <color name="krvpn_divider">#E0E0E0</color>
+    <color name="krvpn_divider_dark">#3D3940</color>
+
+    <!-- Status Colors -->
+    <color name="krvpn_success">#2E7D32</color>
+    <color name="krvpn_success_light">#4CAF50</color>
+    <color name="krvpn_success_container">#C8E6C9</color>
+    <color name="krvpn_on_success">#FFFFFF</color>
+
+    <color name="krvpn_error">#C62828</color>
+    <color name="krvpn_error_light">#EF5350</color>
+    <color name="krvpn_error_container">#FCE4EC</color>
+    <color name="krvpn_on_error">#FFFFFF</color>
+
+    <color name="krvpn_warning">#F57F17</color>
+    <color name="krvpn_warning_light">#FFB300</color>
+    <color name="krvpn_warning_container">#FFF8E1</color>
+    <color name="krvpn_on_warning">#000000</color>
+
+    <color name="krvpn_info">#1565C0</color>
+    <color name="krvpn_info_light">#2196F3</color>
+    <color name="krvpn_info_container">#BBDEFB</color>
+    <color name="krvpn_on_info">#FFFFFF</color>
+
+    <!-- Connection Status Specific -->
+    <color name="krvpn_status_connected">#2E7D32</color>
+    <color name="krvpn_status_connecting">#FFB300</color>
+    <color name="krvpn_status_disconnected">#757575</color>
+    <color name="krvpn_status_error">#C62828</string>
+
+    <!-- Scrim -->
+    <color name="krvpn_scrim">#80000000</color>
+
+    <!-- Transparent -->
+    <color name="transparent">#00000000</color>
+</resources>

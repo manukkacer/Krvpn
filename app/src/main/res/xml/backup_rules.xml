@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Exclude sensitive data from backup -->
+    <exclude
+        domain="sharedpref"
+        path="krvpn_security.xml" />
+    <exclude
+        domain="sharedpref"
+        path="krvpn_configs.xml" />
+    <exclude
+        domain="file"
+        path="configs" />
+    <exclude
+        domain="database"
+        path="krvpn_datastore" />
+    <exclude
+        domain="root"
+        path="cache" />
+</full-backup-content>

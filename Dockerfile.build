@@ -1,0 +1,62 @@
+# Dockerfile for building KRVPN native libraries
+# Usage: docker build -t krvpn-builder . && docker run --rm -v $(pwd):/workspace krvpn-builder
+
+FROM ubuntu:22.04 AS base
+
+# Install dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    wget \
+    unzip \
+    cmake \
+    ninja-build \
+    build-essential \
+    pkg-config \
+    libssl-dev \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Go 1.22
+ENV GO_VERSION=1.22.4
+RUN wget -q https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz -O /tmp/go.tar.gz && \
+    tar -C /usr/local -xzf /tmp/go.tar.gz && \
+    rm /tmp/go.tar.gz
+ENV PATH="/usr/local/go/bin:${PATH}"
+
+# Install gomobile
+RUN go install golang.org/x/mobile/cmd/gomobile@latest && \
+    /root/go/bin/gomobile init
+ENV PATH="/root/go/bin:${PATH}"
+
+# Install Android SDK/NDK
+ENV ANDROID_SDK_ROOT=/opt/android/sdk
+ENV ANDROID_NDK_HOME=/opt/android/sdk/ndk/26.1.10909125
+ENV ANDROID_NDK_VERSION=26.1.10909125
+ENV CMAKE_VERSION=3.22.1
+
+RUN mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools && \
+    wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O /tmp/cmdline-tools.zip && \
+    unzip -q /tmp/cmdline-tools.zip -d ${ANDROID_SDK_ROOT}/cmdline-tools && \
+    mv ${ANDROID_SDK_ROOT}/cmdline-tools/cmdline-tools ${ANDROID_SDK_ROOT}/cmdline-tools/latest && \
+    rm /tmp/cmdline-tools.zip
+
+ENV PATH="${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
+
+# Accept licenses and install SDK/NDK/CMake
+RUN yes | ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager --licenses && \
+    ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager \
+        "platforms;android-35" \
+        "platform-tools" \
+        "build-tools;34.0.0" \
+        "ndk;${ANDROID_NDK_VERSION}" \
+        "cmake;${CMAKE_VERSION}"
+
+# Set up build directory
+WORKDIR /workspace
+
+# Copy build scripts
+COPY build_all_native.sh build_xray.sh build_dnstt.sh build_hev_socks5.sh build_krvpn_security.sh ./
+RUN chmod +x *.sh
+
+# Default command
+CMD ["./build_all_native.sh"]

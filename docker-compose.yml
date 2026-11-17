@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  builder:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    image: krvpn-builder:latest
+    volumes:
+      - .:/workspace
+    environment:
+      - ANDROID_NDK_HOME=/opt/android/sdk/ndk/26.1.10909125
+    working_dir: /workspace
+    command: ./build_all_native.sh
+
+  # Individual service for each library
+  build-xray:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    command: ./build_xray.sh
+
+  build-dnstt:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    command: ./build_dnstt.sh
+
+  build-hev:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    command: ./build_hev_socks5.sh
+
+  build-security:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    command: ./build_krvpn_security.sh

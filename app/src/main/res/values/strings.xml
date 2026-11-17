@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Identity -->
+    <string name="app_name">KRVPN</string>
+    <string name="app_name_short">KRVPN</string>
+    <string name="vpn_session_name">KRVPN Tunnel</string>
+    <string name="notification_channel_name">KRVPN Connection</string>
+    <string name="notification_channel_description">Manages VPN connection status and tunnel</string>
+
+    <!-- General Actions -->
+    <string name="action_connect">Connect</string>
+    <string name="action_disconnect">Disconnect</string>
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_create">Create</string>
+    <string name="action_import">Import</string>
+    <string name="action_export">Export</string>
+    <string name="action_copy">Copy</string>
+    <string name="action_share">Share</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_ok">OK</string>
+    <string name="action_apply">Apply</string>
+    <string name="action_clear">Clear</string>
+    <string name="action_close">Close</string>
+    <string name="action_continue">Continue</string>
+    <string name="action_done">Done</string>
+
+    <!-- Status -->
+    <string name="status_connected">Connected</string>
+    <string name="status_connecting">Connecting…</string>
+    <string name="status_disconnected">Disconnected</string>
+    <string name="status_disconnecting">Disconnecting…</string>
+    <string name="status_reconnecting">Reconnecting…</string>
+    <string name="status_error">Error</string>
+    <string name="status_preparing">Preparing…</string>
+    <string name="status_authenticating">Authenticating…</string>
+
+    <!-- Home Screen -->
+    <string name="home_no_config">No configuration</string>
+    <string name="home_add_config">Add Configuration</string>
+    <string name="home_import_config">Import Config</string>
+    <string name="home_profile_label">Profile</string>
+    <string name="home_logs_label">Logs</string>
+    <string name="home_note_label">Note</string>
+    <string name="home_disconnect_before_switch">Disconnect before switching profile</string>
+
+    <!-- Navigation Drawer / Bottom Nav -->
+    <string name="nav_home">Home</string>
+    <string name="nav_configs">Configs</string>
+    <string name="nav_load_balance">Load Balance</string>
+    <string name="nav_payload">Payload</string>
+    <string name="nav_statistics">Statistics</string>
+    <string name="nav_session_history">Session History</string>
+    <string name="nav_network_tools">Network Tools</string>
+    <string name="nav_diagnostics">Diagnostics</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_about">About KRVPN</string>
+
+    <!-- Config Types -->
+    <string name="config_type_ssh">SSH</string>
+    <string name="config_type_vmess">VMess</string>
+    <string name="config_type_vless">VLESS</string>
+    <string name="config_type_trojan">Trojan</string>
+    <string name="config_type_slowdns">SlowDNS</string>
+    <string name="config_type_load_balance">Load Balance</string>
+
+    <!-- Config Form -->
+    <string name="form_config_name_hint">Configuration name</string>
+    <string name="form_server_host_hint">Server host/IP</string>
+    <string name="form_port_hint">Port</string>
+    <string name="form_username_hint">Username</string>
+    <string name="form_password_hint">Password</string>
+    <string name="form_message_hint">Optional message/note</string>
+    <string name="form_config_name_required">Config name is required</string>
+    <string name="form_server_required">Server host is required</string>
+    <string name="form_port_range">Port must be 1-65535</string>
+
+    <!-- SSH Specific -->
+    <string name="ssh_payload_hint">Custom payload (optional)</string>
+    <string name="ssh_sni_hint">SNI / Host header (optional)</string>
+    <string name="ssh_payload_template">Payload Template</string>
+
+    <!-- Xray Specific (VMess/VLESS/Trojan) -->
+    <string name="xray_uuid_hint">UUID / Password</string>
+    <string name="xray_network_label">Network</string>
+    <string name="xray_network_tcp">TCP</string>
+    <string name="xray_network_ws">WebSocket</string>
+    <string name="xray_network_grpc">gRPC</string>
+    <string name="xray_network_h2">HTTP/2</string>
+    <string name="xray_network_quic">QUIC</string>
+    <string name="xray_tls_label">TLS</string>
+    <string name="xray_tls_none">None</string>
+    <string name="xray_tls_tls">TLS</string>
+    <string name="xray_tls_reality">REALITY</string>
+    <string name="xray_sni_hint">SNI (optional)</string>
+    <string name="xray_fingerprint_hint">Fingerprint (optional)</string>
+    <string name="xray_path_hint">Path / Service Name (optional)</string>
+    <string name="xray_flow_hint">Flow (optional)</string>
+    <string name="xray_reality_pubkey_hint">REALITY Public Key</string>
+    <string name="xray_short_id_hint">Short ID (hex, optional)</string>
+    <string name="xray_mux_enabled">Enable Mux</string>
+    <string name="xray_grpc_service_hint">gRPC Service Name</string>
+
+    <!-- SlowDNS Specific -->
+    <string name="slowdns_resolver_hint">DNS Resolver (IP or DoH/DoT URL)</string>
+    <string name="slowdns_nameserver_hint">Nameserver (optional)</string>
+    <string name="slowdns_public_key_hint">Public Key (Base64)</string>
+    <string name="slowdns_record_type">Record Type</string>
+    <string name="slowdns_record_auto">Auto</string>
+    <string name="slowdns_record_txt">TXT</string>
+    <string name="slowdns_record_null">NULL</string>
+
+    <!-- Protection / Security -->
+    <string name="config_lock_title">Field Protection</string>
+    <string name="config_lock_all">Lock All Fields</string>
+    <string name="config_lock_server">Lock Server</string>
+    <string name="config_lock_payload">Lock Payload</string>
+    <string name="config_lock_credentials">Lock Credentials</string>
+    <string name="config_lock_tls">Lock TLS/SSL</string>
+    <string name="config_prevent_reexport">Prevent Re-export</string>
+    <string name="config_require_import_password">Require Import Password</string>
+    <string name="config_block_rooted">Block Rooted Devices</string>
+    <string name="config_expired_label">Expired</string>
+    <string name="config_expires_format">Expires %1$s</string>
+
+    <!-- Import/Export -->
+    <string name="import_config_title">Import Configuration</string>
+    <string name="import_link_hint">Paste config link (vmess://, vless://, trojan://, ssh://, krvpn://)</string>
+    <string name="import_file_title">Import from File</string>
+    <string name="import_password_hint">Import password (if protected)</string>
+    <string name="export_config_title">Export Configuration</string>
+    <string name="export_link_title">Export as Link</string>
+    <string name="export_file_title">Export as File (.krvpn)</string>
+    <string name="export_password_hint">Export password (optional)</string>
+
+    <!-- Settings -->
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_system">System Default</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_auto_reconnect">Auto Reconnect</string>
+    <string name="settings_auto_reconnect_desc">Automatically reconnect on network change</string>
+    <string name="settings_battery_optimization">Battery Optimization</string>
+    <string name="settings_battery_optimization_desc">Request exemption to keep tunnel alive</string>
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_logs">Connection Logs</string>
+    <string name="settings_clear_logs">Clear Logs</string>
+    <string name="settings_about">About</string>
+    <string name="settings_version_format">Version %1$s (%2$d)</string>
+
+    <!-- Diagnostics -->
+    <string name="diagnostics_title">Diagnostics</string>
+    <string name="diagnostics_internet">Internet Access</string>
+    <string name="diagnostics_dns">DNS Resolution</string>
+    <string name="diagnostics_tunnel_path">Tunnel Path</string>
+    <string name="diagnostics_battery">Battery Handling</string>
+    <string name="diagnostics_running">Running</string>
+    <string name="diagnostics_stopped">Stopped</string>
+    <string name="diagnostics_checking">Checking…</string>
+    <string name="diagnostics_available">Available</string>
+    <string name="diagnostics_unavailable">Unavailable</string>
+
+    <!-- Statistics -->
+    <string name="stats_upload">Upload</string>
+    <string name="stats_download">Download</string>
+    <string name="stats_duration">Duration</string>
+    <string name="stats_speed_up">↑ %1$s/s</string>
+    <string name="stats_speed_down">↓ %1$s/s</string>
+
+    <!-- Errors & Toasts -->
+    <string name="error_generic">An error occurred</string>
+    <string name="error_config_invalid">Invalid configuration</string>
+    <string name="error_import_failed">Import failed</string>
+    <string name="error_export_failed">Export failed</string>
+    <string name="error_vpn_permission_denied">VPN permission denied</string>
+    <string name="error_vpn_prepare_failed">Failed to prepare VPN</string>
+    <string name="error_connection_failed">Connection failed</string>
+    <string name="error_connection_timeout">Connection timeout</string>
+    <string name="error_dns_failed">DNS resolution failed</string>
+    <string name="error_auth_failed">Authentication failed</string>
+    <string name="error_config_locked">Configuration is locked</string>
+    <string name="error_config_expired">Configuration has expired</string>
+    <string name="error_rooted_device_blocked">This config blocks rooted devices</string>
+    <string name="error_native_lib_missing">Native library not found</string>
+
+    <!-- Success -->
+    <string name="success_config_saved">Configuration saved</string>
+    <string name="success_config_imported">Configuration imported</string>
+    <string name="success_config_exported">Configuration exported</string>
+    <string name="success_config_deleted">Configuration deleted</string>
+    <string name="success_copied">Copied to clipboard</string>
+
+    <!-- About -->
+    <string name="about_title">About KRVPN</string>
+    <string name="about_version_format">Version %1$s (Build %2$d)</string>
+    <string name="about_developer">Developed by KRVPN Team</string>
+    <string name="about_telegram_channel">Telegram Channel</string>
+    <string name="about_telegram_group">Telegram Group</string>
+    <string name="about_github">GitHub Repository</string>
+    <string name="about_privacy_policy">Privacy Policy</string>
+    <string name="about_terms">Terms of Service</string>
+    <string name="about_open_source_licenses">Open Source Licenses</string>
+    <string name="about_architecture_format">Architecture: %1$s</string>
+    <string name="about_device_format">Device: %1$s</string>
+    <string name="about_system_format">Android %1$s</string>
+
+    <!-- Logs -->
+    <string name="log_connected">Connected successfully</string>
+    <string name="log_disconnected">Disconnected</string>
+    <string name="log_reconnecting">Reconnecting…</string>
+    <string name="log_connection_failed">Connection failed: %1$s</string>
+    <string name="log_dns_failed">DNS failed: %1$s</string>
+    <string name="log_auth_failed">Authentication failed</string>
+    <string name="log_tunnel_ready">Tunnel ready</string>
+    <string name="log_tunnel_stopped">Tunnel stopped</string>
+
+    <!-- Permissions -->
+    <string name="permission_vpn_title">VPN Permission Required</string>
+    <string name="permission_vpn_message">KRVPN needs VPN permission to create a secure tunnel for your traffic.</string>
+    <string name="permission_battery_title">Battery Optimization</string>
+    <string name="permission_battery_message">Allow KRVPN to run without battery restrictions to maintain connection.</string>
+    <string name="permission_notification_title">Notifications</string>
+    <string name="permission_notification_message">Enable notifications to see connection status.</string>
+
+    <!-- Payload Templates -->
+    <string name="payload_template_title">Payload Templates</string>
+    <string name="payload_template_create">Create Template</string>
+    <string name="payload_template_name_hint">Template name</string>
+    <string name="payload_template_content_hint">Payload content</string>
+
+    <!-- Load Balance -->
+    <string name="lb_title">Load Balance</string>
+    <string name="lb_create_group">Create Group</string>
+    <string name="lb_select_profile_a">Select Profile A</string>
+    <string name="lb_select_profile_b">Select Profile B</string>
+    <string name="lb_strategy_failover">Failover (A main, B backup)</string>
+    <string name="lb_strategy_round_robin">Round Robin</string>
+    <string name="lb_strategy_fastest">Fastest First</string>
+    <string name="lb_strategy_least_conn">Fewest Connections</string>
+    <string name="lb_strategy_weighted">Weighted (by Health)</string>
+    <string name="lb_need_two_profiles">Need at least 2 saved profiles</string>
+
+    <!-- Network Tools -->
+    <string name="tools_title">Network Tools</string>
+    <string name="tools_ping">Ping</string>
+    <string name="tools_traceroute">Traceroute</string>
+    <string name="tools_dns_lookup">DNS Lookup</string>
+    <string name="tools_ip_info">IP Info</string>
+    <string name="tools_port_check">Port Check</string>
+</resources>

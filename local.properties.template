@@ -1,0 +1,15 @@
+# Local properties - COPY TO local.properties AND FILL IN VALUES
+# DO NOT COMMIT THIS FILE!
+
+## SDK/NDK paths (auto-detected usually)
+# sdk.dir=/path/to/android/sdk
+# ndk.dir=/path/to/android/ndk
+
+## Keystore (for release builds)
+# keystore.path=../keystore/krvpn-release.jks
+# keystore.password=YOUR_KEYSTORE_PASSWORD
+# key.alias=krvpn
+# key.password=YOUR_KEY_PASSWORD
+
+## API Keys (if needed)
+# api.base.url=https://api.krvpn.example.com
