@@ -30,29 +30,60 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          api-level: 35
+          ndk-version: 26.1.10909125
+          cmdline-tools-version: '11076708_latest'  # Latest cmdline tools
+          platforms: android-35
+          build-tools: '34.0.0'
+          cmake-version: '3.22.1'
+
+      - name: Accept SDK Licenses
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager \
+            "platforms;android-35" \
+            "build-tools;34.0.0" \
+            "ndk;26.1.10909125" \
+            "cmake;3.22.1"
 
       - name: Make scripts executable
         run: |
           chmod +x ./gradlew
-          if [ -f "./build_native.sh" ]; then chmod +x ./build_native.sh; fi
+          if [ -f "./build_krvpn_security.sh" ]; then chmod +x ./build_krvpn_security.sh; fi
 
       - name: Build native security library
         run: |
           export ANDROID_SDK_ROOT="${ANDROID_HOME}"
-          export ANDROID_NDK_HOME="${ANDROID_NDK_LATEST_HOME:-$ANDROID_NDK_HOME}"
-          if [ -f "./build_native.sh" ]; then ./build_native.sh; fi
+          export ANDROID_NDK_HOME="${ANDROID_NDK_HOME}"
+          if [ -f "./build_krvpn_security.sh" ]; then ./build_krvpn_security.sh; fi
 
       - name: Build Debug APK
         run: |
           export ANDROID_SDK_ROOT="${ANDROID_HOME}"
-          export ANDROID_NDK_HOME="${ANDROID_NDK_LATEST_HOME:-$ANDROID_NDK_HOME}"
+          export ANDROID_NDK_HOME="${ANDROID_NDK_HOME}"
           ./gradlew assembleDebug --stacktrace
+
+      - name: Build Release APK (if keystore available)
+        if: env.KEYSTORE_PASSWORD != '' && env.KEY_PASSWORD != ''
+        run: |
+          export ANDROID_SDK_ROOT="${ANDROID_HOME}"
+          export ANDROID_NDK_HOME="${ANDROID_NDK_HOME}"
+          ./gradlew assembleRelease --stacktrace
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
           name: krvpn-debug-apk
           path: app/build/outputs/apk/debug/*.apk
+          retention-days: 7
+
+      - name: Upload Release APK
+        if: env.KEYSTORE_PASSWORD != '' && env.KEY_PASSWORD != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: krvpn-release-apk
+          path: app/build/outputs/apk/release/*.apk
           retention-days: 7
 
   lint:
@@ -71,6 +102,17 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          api-level: 35
+          ndk-version: 26.1.10909125
+          cmdline-tools-version: '11076708_latest'
+          platforms: android-35
+          build-tools: '34.0.0'
+          cmake-version: '3.22.1'
+
+      - name: Accept SDK Licenses
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
 
       - name: Run Lint
         run: |
@@ -100,6 +142,17 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          api-level: 35
+          ndk-version: 26.1.10909125
+          cmdline-tools-version: '11076708_latest'
+          platforms: android-35
+          build-tools: '34.0.0'
+          cmake-version: '3.22.1'
+
+      - name: Accept SDK Licenses
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
 
       - name: Run Unit Tests
         run: |
